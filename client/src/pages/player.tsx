@@ -126,6 +126,7 @@ export default function PlayerPage() {
             <div className="text-center space-y-4">
               <AlertCircle className="w-12 h-12 text-destructive mx-auto" />
               <p className="text-white">Erro ao carregar o vídeo</p>
+              <p className="text-white/70 text-sm">Verifique a URL do vídeo</p>
               <button
                 onClick={goBackToLives}
                 className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover-elevate active-elevate-2"
@@ -142,10 +143,13 @@ export default function PlayerPage() {
           playing={isPlaying}
           loop
           muted={false}
+          volume={1}
           width="100%"
           height="100%"
           playsinline
+          controls={false}
           onReady={() => {
+            console.log("Player ready!");
             setPlayerReady(true);
             setPlayerError(false);
           }}
@@ -154,11 +158,21 @@ export default function PlayerPage() {
             setPlayerError(true);
             setPlayerReady(false);
           }}
+          onBuffer={() => console.log("Buffering...")}
+          onBufferEnd={() => console.log("Buffer end")}
           config={{
             file: {
               attributes: {
                 controlsList: "nodownload",
                 disablePictureInPicture: true,
+                crossOrigin: "anonymous",
+                preload: "auto",
+              },
+              forceVideo: true,
+              forceAudio: false,
+              hlsOptions: {
+                forceHLS: false,
+                debug: false,
               },
             },
           }}
