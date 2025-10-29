@@ -24,6 +24,10 @@ export default function PlayerPage() {
 
   useEffect(() => {
     if (currentLive) {
+      // 🔧 ADICIONADO: Log para debug
+      console.log("🎥 Carregando live:", currentLive.title);
+      console.log("📹 URL do vídeo:", currentLive.videoUrl);
+      
       setViewerCount(currentLive.baseViewerCount);
 
       const interval = setInterval(() => {
@@ -149,17 +153,19 @@ export default function PlayerPage() {
           playsinline
           controls={false}
           onReady={() => {
-            console.log("Player ready!");
+            // 🔧 ADICIONADO: Log detalhado
+            console.log("✅ Player pronto! Vídeo carregado com sucesso");
             setPlayerReady(true);
             setPlayerError(false);
           }}
           onError={(e) => {
-            console.error("Player error:", e);
+            // 🔧 ADICIONADO: Log detalhado do erro
+            console.error("❌ Erro no player:", e);
             setPlayerError(true);
             setPlayerReady(false);
           }}
-          onBuffer={() => console.log("Buffering...")}
-          onBufferEnd={() => console.log("Buffer end")}
+          onBuffer={() => console.log("⏳ Buffering...")}
+          onBufferEnd={() => console.log("✅ Buffer completo")}
           config={{
             file: {
               attributes: {
